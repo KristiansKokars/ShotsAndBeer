@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/navigation_menu">
+
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="com.kristianskokars.shotsandbeer.ui.menu.MenuFragment" />
+
+    <fragment
+        android:id="@+id/navigation_game"
+        android:name="com.kristianskokars.shotsandbeer.ui.game.GameFragment" />
+
+    <fragment
+        android:id="@+id/navigation_high_scores"
+        android:name="com.kristianskokars.shotsandbeer.ui.highscores.HighScoresFragment"/>
+
+</navigation>
