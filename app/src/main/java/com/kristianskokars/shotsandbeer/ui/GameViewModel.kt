@@ -72,8 +72,7 @@ class GameViewModel : ViewModel() {
 
         // Marks the pieces in their appropriate locations
         pieces.forEach { piece ->
-            if (piece.value in valuesToMark)
-            {
+            if (piece.value in valuesToMark) {
                 piece.position = valuesToMark.indexOf(piece.value)
             }
         }
@@ -102,10 +101,8 @@ class GameViewModel : ViewModel() {
         // checks only positions that are in the answer
         // (works thanks to references, hope it counts as clean)
         results.filter { it.position != null }.forEach { piece ->
-            if (piece.value in inputNumbers)
-            {
-                if (piece.position == inputNumbers.indexOf(piece.value))
-                {
+            if (piece.value in inputNumbers) {
+                if (piece.position == inputNumbers.indexOf(piece.value)) {
                     Timber.d("Piece found: ${piece.value}")
                     piece.isFound = true
                 } else {
@@ -119,17 +116,15 @@ class GameViewModel : ViewModel() {
         }
 
         // Checks if all pieces have been found
-        if ( results.filter { it.isFound }.size == GAME_LIST_SIZE)
-        {
+        if (results.filter { it.isFound }.size == GAME_LIST_SIZE) {
             onGameOver(true)
         }
 
         _gamePieces.tryEmit(results)
     }
 
-    private fun convertInputToResults(input: String) : List<Int> {
+    private fun convertInputToResults(input: String): List<Int> {
         // Validation is done already in the input, so we don't do it more here
-
         val results = mutableListOf<Int>()
         input.forEach { number -> results.add(number.digitToInt()) }
         return results.toList()
