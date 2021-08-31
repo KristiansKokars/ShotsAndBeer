@@ -1,4 +1,4 @@
-package com.testdevlab.numbertapper.common
+package com.kristianskokars.shotsandbeer.common
 
 import java.text.SimpleDateFormat
 import java.util.*

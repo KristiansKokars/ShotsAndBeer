@@ -8,7 +8,9 @@ import com.kristianskokars.shotsandbeer.databinding.ItemGamePieceBinding
 import com.kristianskokars.shotsandbeer.repository.models.GamePiece
 import kotlin.properties.Delegates
 
-class GameAdapter : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
+class GameAdapter(
+    private val onGamePieceClicked: (GamePiece) -> Unit
+) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     var gamePieces: List<GamePiece> by Delegates.observable(emptyList(), { _, old, new ->
         DiffUtil.calculateDiff(DifferenceUtil(old, new)).dispatchUpdatesTo(this)
@@ -27,9 +29,9 @@ class GameAdapter : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
         holder.binding.gamePiece.tag = item
         holder.binding.item = item
 
-//        holder.binding.gamePiece.setOnClickListener {
-//            onGamePieceClicked(it.tag as GamePiece)
-//        }
+        holder.binding.gamePiece.setOnClickListener {
+            onGamePieceClicked(it.tag as GamePiece)
+        }
     }
 
     override fun getItemCount() = gamePieces.size

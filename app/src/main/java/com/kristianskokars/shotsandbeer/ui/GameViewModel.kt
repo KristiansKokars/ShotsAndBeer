@@ -3,15 +3,10 @@ package com.kristianskokars.shotsandbeer.ui
 import android.os.CountDownTimer
 import androidx.lifecycle.ViewModel
 import com.kristianskokars.shotsandbeer.App
-import com.kristianskokars.shotsandbeer.common.GAME_LIST_SIZE
-import com.kristianskokars.shotsandbeer.common.GAME_NUMBER_CAP
-import com.kristianskokars.shotsandbeer.common.MAX_GAME_TIME
-import com.kristianskokars.shotsandbeer.common.launchIO
+import com.kristianskokars.shotsandbeer.common.*
 import com.kristianskokars.shotsandbeer.repository.GameRepository
 import com.kristianskokars.shotsandbeer.repository.models.GamePiece
 import com.kristianskokars.shotsandbeer.repository.models.HighScoreModel
-import com.testdevlab.numbertapper.common.toDateString
-import com.testdevlab.numbertapper.common.toTimeString
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
@@ -39,14 +34,14 @@ class GameViewModel : ViewModel() {
     private val _highScores = MutableSharedFlow<List<HighScoreModel>>(replay = 1)
     private val _gamePieces = MutableSharedFlow<List<GamePiece>>(replay = 1)
     private val _gameTimer = MutableSharedFlow<String>(replay = 1)
-    private val _onGameOver = MutableSharedFlow<String?>(replay = 1)
     private val _attempts = MutableSharedFlow<Int>(replay = 1)
+    private val _onGameOver = MutableSharedFlow<String?>(replay = 1)
 
     val highScores: SharedFlow<List<HighScoreModel>> = _highScores
     val gamePieces: SharedFlow<List<GamePiece>> = _gamePieces
     val gameTimer: SharedFlow<String> = _gameTimer
-    val onGameOver: SharedFlow<String?> = _onGameOver
     val attempts: SharedFlow<Int> = _attempts
+    val onGameOver: SharedFlow<String?> = _onGameOver
 
     init {
         App.component.inject(this)
@@ -66,31 +61,37 @@ class GameViewModel : ViewModel() {
         timer.start()
     }
 
+    // I am unsure if I should divide this more due to Single Responsibility or not?
     private fun generatePieces(): List<GamePiece> {
-        // TODO: Violation of Single-responsibility, this does too much
-        // first one will always be a unique number so no need to check
-        val results = mutableListOf(Random.nextInt(1, GAME_NUMBER_CAP))
-
-        while (results.size != GAME_LIST_SIZE) {
-            val value = Random.nextInt(1, GAME_NUMBER_CAP)
-            if (value !in results) {
-                results.add(value)
-            }
-        }
+        val valuesToMark = randomPositionsToMark()
 
         val pieces = mutableListOf<GamePiece>()
         for (i in 1 until GAME_NUMBER_CAP) {
             pieces.add(GamePiece(i))
         }
 
+        // Marks the pieces in their appropriate locations
         pieces.forEach { piece ->
-            if (piece.value in results)
+            if (piece.value in valuesToMark)
             {
-                piece.position = results.indexOf(piece.value)
+                piece.position = valuesToMark.indexOf(piece.value)
             }
         }
 
         return pieces.toList()
+    }
+
+    private fun randomPositionsToMark(): List<Int> {
+        // first one will always be a unique number so no need to check
+        val markedValues = mutableListOf(Random.nextInt(1, GAME_NUMBER_CAP))
+        while (markedValues.size != GAME_LIST_SIZE) {
+            val value = Random.nextInt(1, GAME_NUMBER_CAP)
+            if (value !in markedValues) {
+                markedValues.add(value)
+            }
+        }
+
+        return markedValues
     }
 
     fun calculateResults(input: String) {
@@ -98,9 +99,10 @@ class GameViewModel : ViewModel() {
         val inputNumbers = convertInputToResults(input)
         val results = gamePieces.replayCache[0].map { it.copy() }
 
-        // filter before hand maybe?
-        results.forEach { piece ->
-            if (piece.position != null && piece.value in inputNumbers)
+        // checks only positions that are in the answer
+        // (works thanks to references, hope it counts as clean)
+        results.filter { it.position != null }.forEach { piece ->
+            if (piece.value in inputNumbers)
             {
                 if (piece.position == inputNumbers.indexOf(piece.value))
                 {
@@ -110,10 +112,14 @@ class GameViewModel : ViewModel() {
                     Timber.d("Piece guessed: ${piece.value}, position of ${piece.position}")
                     piece.isGuessed = true
                 }
+            } else { // when pieces are previously found and not in the current input, wipe their status
+                piece.isFound = false
+                piece.isGuessed = false
             }
         }
 
-        if ( results.filter { it.position != null && it.isFound }.size == GAME_LIST_SIZE)
+        // Checks if all pieces have been found
+        if ( results.filter { it.isFound }.size == GAME_LIST_SIZE)
         {
             onGameOver(true)
         }
@@ -122,13 +128,10 @@ class GameViewModel : ViewModel() {
     }
 
     private fun convertInputToResults(input: String) : List<Int> {
-        // Validation is done already in the input, so this should not be a problem, hopefully this
-        // counts as clean code
+        // Validation is done already in the input, so we don't do it more here
 
-        // Conversion
         val results = mutableListOf<Int>()
         input.forEach { number -> results.add(number.digitToInt()) }
-        Timber.d("Converted input $input to a list of Int: $results")
         return results.toList()
     }
 

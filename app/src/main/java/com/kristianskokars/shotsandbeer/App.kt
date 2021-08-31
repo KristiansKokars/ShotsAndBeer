@@ -13,10 +13,9 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-//        if (BuildConfig.DEBUG) {
-//            Timber.plant(LineNumberDebugTree())
-//        }
-        Timber.plant(LineNumberDebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(LineNumberDebugTree())
+        }
         Timber.d("App created!")
 
         component = DaggerInjectionComponent

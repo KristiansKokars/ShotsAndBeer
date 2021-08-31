@@ -45,7 +45,6 @@ class HighScoresFragment : Fragment() {
                     View.GONE
                 }
                 adapter.highScores = highScores
-                Timber.d("High Scores List: $highScores")
             }
         }
     }

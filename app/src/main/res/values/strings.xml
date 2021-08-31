@@ -2,10 +2,15 @@
     <string name="app_name">Shots and Beer</string>
     <string name="new_game">New Game</string>
     <string name="high_scores">High Scores</string>
+
     <string name="submit">Submit</string>
     <string name="game_over_template">Game Over: %1$s</string>
-    <string name="no_high_scores">No High Scores Found. Go play the game!</string>
-    <string name="go_back">Go Back</string>
     <string name="last_input">Last Input: %1$s</string>
     <string name="attempts_made">Attempts Made: %1$s</string>
+
+    <string name="no_high_scores">No High Scores Found. Go play the game!</string>
+    <string name="go_back">Go Back</string>
+    <string name="score_attempts">Attempts: %1$s</string>
+    <string name="score_time">Time: %1$s</string>
+    <string name="score_date">Date: %1$s</string>
 </resources>

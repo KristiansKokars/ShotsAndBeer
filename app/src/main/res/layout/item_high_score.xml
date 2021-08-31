@@ -31,30 +31,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="@{item.date}"
-                android:textColor="@color/black"
+                android:text="@{@string/score_date(item.date)}"
                 android:textSize="14sp"
-                tools:text="27.08.2021 10:35:00" />
+                tools:text="Date: 27.08.2021 10:35:00" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@color/black"
                 android:textSize="14sp"
-                android:text="@{item.time}"
-                tools:text="00:14:144" />
+                android:text="@{@string/score_time(item.time)}"
+                tools:text="Time: 00:14:144" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@color/black"
                 android:textSize="14sp"
-                android:text="@{item.attempts}"
-                tools:text="5" />
+                android:text="@{@string/score_attempts(item.attempts)}"
+                tools:text="Attempts: 5" />
 
         </LinearLayout>
 
