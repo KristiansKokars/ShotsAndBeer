@@ -17,18 +17,18 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         app:cardBackgroundColor="@{item.isFound ? @color/piece_found : item.isGuessed ? @color/piece_guessed : @color/piece_idle}"
-        app:cardElevation="4dp"
         app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         tools:cardBackgroundColor="@color/piece_idle">
 
         <TextView
             android:layout_width="82dp"
             android:layout_height="82dp"
-            android:text="@{item.valueString}"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
+            android:text="@{item.valueString}"
             android:textColor="@color/black"
             android:textSize="44sp"
-            android:fontFamily="sans-serif-medium"
             tools:text="1" />
 
     </androidx.cardview.widget.CardView>

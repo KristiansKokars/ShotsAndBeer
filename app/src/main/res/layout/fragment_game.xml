@@ -49,23 +49,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:importantForAutofill="no"
         android:inputType="number"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/end_game"
         app:layout_constraintEnd_toStartOf="@+id/submit"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="1459"
         tools:ignore="LabelFor"
-        android:importantForAutofill="no" />
+        tools:text="1459" />
 
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/submit"
         android:enabled="false"
+        android:text="@string/submit"
         app:layout_constraintBottom_toTopOf="@+id/end_game"
         app:layout_constraintEnd_toEndOf="parent" />
 
