@@ -65,9 +65,9 @@ class GameViewModel : ViewModel() {
 
     private fun generateAnswerList(): List<Int> {
         // first one will always be a unique number so no need to check
-        val answerList = mutableListOf(Random.nextInt(1, 10))
+        val answerList = mutableListOf(Random.nextInt(0, 10))
         while (answerList.size != GAME_LIST_SIZE) {
-            val value = Random.nextInt(1, 10)
+            val value = Random.nextInt(0, 10)
             if (value !in answerList) {
                 answerList.add(value)
             }
