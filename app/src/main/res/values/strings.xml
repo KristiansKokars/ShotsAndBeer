@@ -5,7 +5,6 @@
 
     <string name="submit">Submit</string>
     <string name="game_over_template">Game Over: %1$s</string>
-    <string name="last_input">Last Input: %1$s</string>
     <string name="attempts_made">Attempts Made: %1$s</string>
 
     <string name="no_high_scores">No High Scores Found. Go play the game!</string>

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -39,7 +38,7 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.gameGrid.adapter = adapter
-        binding.gameGrid.layoutManager = GridLayoutManager(requireContext(), 4)
+        binding.gameGrid.layoutManager = GridLayoutManager(requireContext(), GAME_LIST_SIZE)
 
         // Adjusts the number cap in the input field
         binding.input.filters += InputFilter.LengthFilter(GAME_LIST_SIZE)
@@ -48,9 +47,14 @@ class GameFragment : Fragment() {
 
         binding.submit.setOnClickListener {
             val text = binding.input.text.toString()
-            binding.emptyHighScore.text = getString(R.string.last_input, text)
             binding.input.text.clear()
-            viewModel.calculateResults(text)
+
+            viewModel.calculateResults(text) { index, itemCount ->
+                adapter.notifyItemRangeInserted(index, itemCount)
+                // Originally tried smoothScrollToPosition, this felt better though
+                binding.gameGrid.scrollToPosition(adapter.gamePieces.size)
+            }
+
         }
 
         binding.endGame.setOnClickListener {
@@ -60,7 +64,6 @@ class GameFragment : Fragment() {
         binding.input.doAfterTextChanged {
             binding.submit.isEnabled = binding.input.text.length == GAME_LIST_SIZE
         }
-
 
         launchMain {
             viewModel.gamePieces.collect { pieces ->
@@ -75,15 +78,15 @@ class GameFragment : Fragment() {
         }
 
         launchMain {
-            viewModel.attempts.collect { attempt ->
-                binding.nextGamePiece.text = getString(R.string.attempts_made, attempt.toString())
+            viewModel.attemptCount.collect { count ->
+                binding.nextGamePiece.text = getString(R.string.attempts_made, count.toString())
             }
         }
 
         launchMain {
             viewModel.onGameOver.collect { time ->
                 if (time == null) return@collect
-                AlertDialog.Builder(requireContext()) // NumberTapper can pass in context, Android Studio here requires this though...
+                AlertDialog.Builder(requireContext())
                     .setMessage(getString(R.string.game_over_template, time))
                     .setPositiveButton("Ok") { popup, _ ->
                         popup.dismiss()

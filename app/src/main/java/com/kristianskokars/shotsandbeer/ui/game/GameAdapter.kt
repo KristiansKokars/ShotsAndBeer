@@ -44,7 +44,7 @@ class GameAdapter(
         override fun getNewListSize() = new.size
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            old[oldItemPosition].value == new[newItemPosition].value
+            old[oldItemPosition].id == new[newItemPosition].id
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
             old[oldItemPosition] == new[newItemPosition]
