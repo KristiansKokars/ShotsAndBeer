@@ -51,10 +51,8 @@ class GameFragment : Fragment() {
 
             viewModel.calculateResults(text) { index, itemCount ->
                 adapter.notifyItemRangeInserted(index, itemCount)
-                // Originally tried smoothScrollToPosition, this felt better though
-                binding.gameGrid.scrollToPosition(adapter.gamePieces.size)
+                binding.gameGrid.smoothScrollToPosition(adapter.gamePieces.size)
             }
-
         }
 
         binding.endGame.setOnClickListener {
