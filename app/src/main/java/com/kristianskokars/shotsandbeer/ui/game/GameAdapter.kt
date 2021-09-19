@@ -50,7 +50,7 @@ class GameAdapter(
                 holder.binding.gamePieceTextView.layoutParams.width = 50 * densityFactor
                 holder.binding.gamePieceTextView.textSize = 22 * fontScaleFactor
             }
-            else -> return
+            else -> Unit
         }
 
         holder.binding.gamePiece.setOnClickListener {
