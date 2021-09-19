@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kristianskokars.shotsandbeer.databinding.ItemGamePieceBinding
 import com.kristianskokars.shotsandbeer.repository.models.Difficulty
 import com.kristianskokars.shotsandbeer.repository.models.GamePiece
+import kotlin.math.ceil
 import kotlin.properties.Delegates
 
 class GameAdapter(
@@ -36,7 +37,7 @@ class GameAdapter(
         //  this is going to be a refactoring for later
         // nothing for easy as that is default values already in XML view
 
-        val densityFactor = holder.binding.gamePiece.context.resources.displayMetrics.density.toInt()
+        val densityFactor = ceil(holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
         val fontScaleFactor = holder.binding.gamePiece.context.resources.configuration.fontScale
         when (difficulty) {
             Difficulty.NORMAL -> {
