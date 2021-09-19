@@ -7,9 +7,8 @@ import androidx.room.Query
 import com.kristianskokars.shotsandbeer.repository.models.HighScoreModel
 import kotlinx.coroutines.flow.Flow
 
-// TODO: Consider renaming it to HighScoreDao to better reflect it's purpose
 @Dao
-interface GameDao {
+interface HighScoreDao {
     @Query("SELECT * FROM high_score_table")
     fun getHighScores(): Flow<List<HighScoreModel>>
 

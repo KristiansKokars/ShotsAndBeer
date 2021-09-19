@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kristianskokars.shotsandbeer.R
-import com.kristianskokars.shotsandbeer.common.GAME_LIST_SIZE
 import com.kristianskokars.shotsandbeer.common.launchMain
 import com.kristianskokars.shotsandbeer.common.openFragment
 import com.kristianskokars.shotsandbeer.databinding.FragmentGameBinding
 import com.kristianskokars.shotsandbeer.ui.GameViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 
 class GameFragment : Fragment() {
@@ -24,7 +24,7 @@ class GameFragment : Fragment() {
 
     private val viewModel by activityViewModels<GameViewModel>()
     private val adapter by lazy {
-        GameAdapter { gamePiece ->
+        GameAdapter(viewModel.difficulty.replayCache[0]) { gamePiece ->
             binding.input.text.append(gamePiece.valueString)
         }
     }
@@ -37,11 +37,12 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val answerLength = viewModel.difficulty.replayCache[0].answerLength
         binding.gameGrid.adapter = adapter
-        binding.gameGrid.layoutManager = GridLayoutManager(requireContext(), GAME_LIST_SIZE)
+        binding.gameGrid.layoutManager = GridLayoutManager(requireContext(), answerLength)
 
         // Adjusts the number cap in the input field
-        binding.input.filters += InputFilter.LengthFilter(GAME_LIST_SIZE)
+        binding.input.filters += InputFilter.LengthFilter(answerLength)
 
         viewModel.startGame()
 
@@ -49,10 +50,7 @@ class GameFragment : Fragment() {
             val text = binding.input.text.toString()
             binding.input.text.clear()
 
-            viewModel.calculateResults(text) { index, itemCount ->
-                adapter.notifyItemRangeInserted(index, itemCount)
-                binding.gameGrid.smoothScrollToPosition(adapter.itemCount)
-            }
+            viewModel.calculateResults(text)
         }
 
         binding.endGame.setOnClickListener {
@@ -60,12 +58,14 @@ class GameFragment : Fragment() {
         }
 
         binding.input.doAfterTextChanged {
-            binding.submit.isEnabled = binding.input.text.length == GAME_LIST_SIZE
+            binding.submit.isEnabled = binding.input.text.length == answerLength
         }
 
         launchMain {
             viewModel.gamePieces.collect { pieces ->
                 adapter.gamePieces = pieces
+                delay(100)
+                binding.gameGrid.smoothScrollToPosition(adapter.itemCount)
             }
         }
 
@@ -77,7 +77,7 @@ class GameFragment : Fragment() {
 
         launchMain {
             viewModel.attemptCount.collect { count ->
-                binding.nextGamePiece.text = getString(R.string.attempts_made, count.toString())
+                binding.attemptsMade.text = getString(R.string.attempts_made, count.toString())
             }
         }
 

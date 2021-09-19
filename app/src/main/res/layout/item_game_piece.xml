@@ -22,6 +22,7 @@
         tools:cardBackgroundColor="@color/piece_idle">
 
         <TextView
+            android:id="@+id/game_piece_text_view"
             android:layout_width="82dp"
             android:layout_height="82dp"
             android:fontFamily="sans-serif-medium"

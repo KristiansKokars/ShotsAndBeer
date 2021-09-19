@@ -11,4 +11,8 @@
     <color name="piece_found">#AED581</color>
     <color name="piece_guessed">#D8C14D</color>
     <color name="piece_idle">#919191</color>
+
+    <color name="difficulty_easy">#4CAF50</color>
+    <color name="difficulty_normal">#FFC107</color>
+    <color name="difficulty_hard">#F44336</color>
 </resources>

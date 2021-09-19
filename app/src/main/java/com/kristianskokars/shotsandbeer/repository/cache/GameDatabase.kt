@@ -6,5 +6,5 @@ import com.kristianskokars.shotsandbeer.repository.models.HighScoreModel
 
 @Database(entities = [HighScoreModel::class], version = 1, exportSchema = false)
 abstract class GameDatabase: RoomDatabase() {
-    abstract fun gameDao(): GameDao
+    abstract fun gameDao(): HighScoreDao
 }

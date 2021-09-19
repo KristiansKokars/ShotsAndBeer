@@ -11,10 +11,7 @@ import com.kristianskokars.shotsandbeer.common.launchMain
 import com.kristianskokars.shotsandbeer.common.openFragment
 import com.kristianskokars.shotsandbeer.databinding.FragmentHighscoresBinding
 import com.kristianskokars.shotsandbeer.ui.GameViewModel
-import com.kristianskokars.shotsandbeer.ui.highscores.HighScoreAdapter
 import kotlinx.coroutines.flow.collect
-import timber.log.Timber
-
 
 class HighScoresFragment : Fragment() {
 

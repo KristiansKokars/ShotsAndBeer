@@ -1,8 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/start_new_game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Difficulty: Normal" />
+
+    <!--
+    We are hardcoding the difficulty options here,
+    ideally it would generate based on the Enum list of difficulties,
+    but that would be a bit overkill for a simple project like this!
+    -->
+
+    <Button
+        android:id="@+id/difficulty_easy"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="@string/difficulty_easy"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/difficulty_normal"
+        app:layout_constraintTop_toBottomOf="@+id/difficulty"
+        android:backgroundTint="@color/difficulty_easy" />
+
+    <Button
+        android:id="@+id/difficulty_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="@string/difficulty_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/difficulty"
+        android:backgroundTint="@color/difficulty_normal" />
+
+    <Button
+        android:id="@+id/difficulty_hard"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="@string/difficulty_hard"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/difficulty_normal"
+        app:layout_constraintTop_toBottomOf="@+id/difficulty"
+        android:backgroundTint="@color/difficulty_hard" />
 
     <Button
         android:id="@+id/start_new_game"

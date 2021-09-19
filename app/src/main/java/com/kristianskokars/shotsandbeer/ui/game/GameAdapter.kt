@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kristianskokars.shotsandbeer.databinding.ItemGamePieceBinding
+import com.kristianskokars.shotsandbeer.repository.models.Difficulty
 import com.kristianskokars.shotsandbeer.repository.models.GamePiece
 import kotlin.properties.Delegates
 
 class GameAdapter(
-    private val onGamePieceClicked: (GamePiece) -> Unit
+    private val difficulty: Difficulty,
+    private val onGamePieceClicked: (GamePiece) -> Unit,
 ) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     var gamePieces: List<GamePiece> by Delegates.observable(emptyList(), { _, old, new ->
@@ -28,6 +30,24 @@ class GameAdapter(
         val item = gamePieces[position]
         holder.binding.gamePiece.tag = item
         holder.binding.item = item
+
+        // TODO: I do not like this, I do not approve of this, but I accept this - for now, as I have
+        //  no better idea since data binding was messy as well... not the right place to do this, but
+        //  this is going to be a refactoring for later
+        // nothing for easy as that is default values already in XML view
+        when (difficulty) {
+            Difficulty.NORMAL -> {
+                holder.binding.gamePieceTextView.layoutParams.height = (60 * holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
+                holder.binding.gamePieceTextView.layoutParams.width = (60 * holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
+                holder.binding.gamePieceTextView.textSize = 30 * holder.binding.gamePiece.context.resources.configuration.fontScale
+            }
+            Difficulty.HARD -> {
+                holder.binding.gamePieceTextView.layoutParams.height = (50 * holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
+                holder.binding.gamePieceTextView.layoutParams.width = (50 * holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
+                holder.binding.gamePieceTextView.textSize = 22 * holder.binding.gamePiece.context.resources.configuration.fontScale
+            }
+            else -> return
+        }
 
         holder.binding.gamePiece.setOnClickListener {
             onGamePieceClicked(it.tag as GamePiece)

@@ -5,15 +5,14 @@ import androidx.lifecycle.ViewModel
 import com.kristianskokars.shotsandbeer.App
 import com.kristianskokars.shotsandbeer.common.*
 import com.kristianskokars.shotsandbeer.repository.GameRepository
+import com.kristianskokars.shotsandbeer.repository.models.Difficulty
 import com.kristianskokars.shotsandbeer.repository.models.GamePiece
 import com.kristianskokars.shotsandbeer.repository.models.HighScoreModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
-import kotlin.random.Random
 
 class GameViewModel : ViewModel() {
 
@@ -37,13 +36,16 @@ class GameViewModel : ViewModel() {
     private val _attemptCount = MutableSharedFlow<Int>(replay = 1)
     private val _onGameOver = MutableSharedFlow<String?>(replay = 1)
 
+    private var answer: List<Int> = emptyList()
+    var difficulty = MutableSharedFlow<Difficulty>(replay = 1)
+
     val highScores: SharedFlow<List<HighScoreModel>> = _highScores
     val gamePieces: SharedFlow<List<GamePiece>> = _gamePieces
     val gameTimer: SharedFlow<String> = _gameTimer
     val attemptCount: SharedFlow<Int> = _attemptCount
     val onGameOver: SharedFlow<String?> = _onGameOver
 
-    private lateinit var answers: List<Int>
+
 
     init {
         App.component.inject(this)
@@ -52,10 +54,13 @@ class GameViewModel : ViewModel() {
                 _highScores.tryEmit(scores)
             }
         }
+        launchMain {
+            difficulty.emit(Difficulty.EASY)
+        }
     }
 
     fun startGame() {
-        answers = generateAnswerList()
+        answer = generateAnswerList()
 
         _onGameOver.tryEmit(null)
         _attemptCount.tryEmit(0)
@@ -64,59 +69,41 @@ class GameViewModel : ViewModel() {
     }
 
     private fun generateAnswerList(): List<Int> {
-        // first one will always be a unique number so no need to check
-        val answerList = mutableListOf(Random.nextInt(0, 10))
-        while (answerList.size != GAME_LIST_SIZE) {
-            val value = Random.nextInt(0, 10)
-            if (value !in answerList) {
-                answerList.add(value)
-            }
-        }
+        // Credit to Edijs Gorbunovs for vastly reducing the logic needed here (and all the other improvements!)
+        val values = (0..9).shuffled().toMutableList()
+        answer = (0 until difficulty.replayCache[0].answerLength).map { values.removeFirst() }
 
-        return answerList
+        return answer
     }
 
-    fun calculateResults(
-        input: String,
-        onListUpdated: (insertedAtIndex: Int, itemCount: Int) -> Unit
-    ) {
+    fun calculateResults(input: String) {
         _attemptCount.tryEmit(_attemptCount.replayCache[0] + 1)
-        val inputNumbers = convertInputToIntList(input)
+        val inputNumbers = input.convertInputToIntList()
         val attemptsList = _gamePieces.replayCache[0].toMutableList()
         val currentAttempt = generatePieces(inputNumbers)
-        val insertedAtIndex = attemptsList.size
 
         // Checks if all pieces have been found
-        if (currentAttempt.filter { it.isFound }.size == GAME_LIST_SIZE) {
+        if (currentAttempt.filter { it.isFound }.size == difficulty.replayCache[0].answerLength) {
             onGameOver(true)
         }
 
         attemptsList.addAll(currentAttempt)
         _gamePieces.tryEmit(attemptsList)
-        onListUpdated(insertedAtIndex, currentAttempt.size)
-    }
-
-    private fun convertInputToIntList(input: String): List<Int> {
-        // Validation is done already in the input, so we don't do it more here
-        val results = mutableListOf<Int>()
-        input.forEach { number -> results.add(number.digitToInt()) }
-        return results.toList()
     }
 
     private fun generatePieces(inputNumbers: List<Int>): List<GamePiece> {
         val pieces = mutableListOf<GamePiece>()
+        var id = _gamePieces.replayCache[0].size
 
         inputNumbers.forEachIndexed { index, digit ->
-            if (digit in answers) {
-                if (index == answers.indexOf(digit)) {
-                    Timber.d("Piece found: $digit")
-                    pieces.add(GamePiece(digit, isFound = true))
+            if (digit in answer) {
+                if (index == answer.indexOf(digit)) {
+                    pieces.add(GamePiece(id++ , digit, isFound = true))
                 } else {
-                    Timber.d("Piece guessed: $digit")
-                    pieces.add(GamePiece(digit, isGuessed = true))
+                    pieces.add(GamePiece(id++ , digit, isGuessed = true))
                 }
             } else {
-                pieces.add(GamePiece(digit))
+                pieces.add(GamePiece(id++, digit))
             }
         }
 

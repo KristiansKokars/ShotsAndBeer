@@ -6,7 +6,6 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [InjectionModule::class])
-interface InjectionComponent
-{
+interface InjectionComponent {
     fun inject(target: GameViewModel)
 }
