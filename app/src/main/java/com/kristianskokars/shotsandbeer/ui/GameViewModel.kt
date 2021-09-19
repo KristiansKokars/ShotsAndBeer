@@ -98,9 +98,9 @@ class GameViewModel : ViewModel() {
         inputNumbers.forEachIndexed { index, digit ->
             if (digit in answer) {
                 if (index == answer.indexOf(digit)) {
-                    pieces.add(GamePiece(id++ , digit, isFound = true))
+                    pieces.add(GamePiece(id++, digit, isFound = true))
                 } else {
-                    pieces.add(GamePiece(id++ , digit, isGuessed = true))
+                    pieces.add(GamePiece(id++, digit, isGuessed = true))
                 }
             } else {
                 pieces.add(GamePiece(id++, digit))

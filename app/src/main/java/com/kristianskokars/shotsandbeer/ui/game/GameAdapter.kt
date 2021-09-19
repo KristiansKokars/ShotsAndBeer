@@ -35,16 +35,19 @@ class GameAdapter(
         //  no better idea since data binding was messy as well... not the right place to do this, but
         //  this is going to be a refactoring for later
         // nothing for easy as that is default values already in XML view
+
+        val densityFactor = holder.binding.gamePiece.context.resources.displayMetrics.density.toInt()
+        val fontScaleFactor = holder.binding.gamePiece.context.resources.configuration.fontScale
         when (difficulty) {
             Difficulty.NORMAL -> {
-                holder.binding.gamePieceTextView.layoutParams.height = (60 * holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
-                holder.binding.gamePieceTextView.layoutParams.width = (60 * holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
-                holder.binding.gamePieceTextView.textSize = 30 * holder.binding.gamePiece.context.resources.configuration.fontScale
+                holder.binding.gamePieceTextView.layoutParams.height = 60 * densityFactor
+                holder.binding.gamePieceTextView.layoutParams.width = 60 * densityFactor
+                holder.binding.gamePieceTextView.textSize = 30 * fontScaleFactor
             }
             Difficulty.HARD -> {
-                holder.binding.gamePieceTextView.layoutParams.height = (50 * holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
-                holder.binding.gamePieceTextView.layoutParams.width = (50 * holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
-                holder.binding.gamePieceTextView.textSize = 22 * holder.binding.gamePiece.context.resources.configuration.fontScale
+                holder.binding.gamePieceTextView.layoutParams.height = 50 * densityFactor
+                holder.binding.gamePieceTextView.layoutParams.width = 50 * densityFactor
+                holder.binding.gamePieceTextView.textSize = 22 * fontScaleFactor
             }
             else -> return
         }

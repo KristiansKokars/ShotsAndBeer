@@ -86,7 +86,7 @@ class GameFragment : Fragment() {
                 if (time == null) return@collect
                 AlertDialog.Builder(requireContext())
                     .setMessage(getString(R.string.game_over_template, time))
-                    .setPositiveButton("Ok") { popup, _ ->
+                    .setPositiveButton("OK") { popup, _ ->
                         popup.dismiss()
                         openFragment(R.id.navigation_menu)
                     }
