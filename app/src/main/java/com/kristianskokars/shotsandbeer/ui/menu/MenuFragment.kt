@@ -28,31 +28,34 @@ class MenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupListeners()
+        setupCollectors()
+    }
+
+    private fun setupListeners() {
         binding.startNewGame.setOnClickListener {
             openFragment(R.id.navigation_game)
         }
         binding.showHighScores.setOnClickListener {
             openFragment(R.id.navigation_high_scores)
         }
-
         binding.difficultyEasy.setOnClickListener {
-            viewModel.difficulty.tryEmit(Difficulty.EASY)
+            viewModel.setDifficulty(Difficulty.EASY)
         }
-
         binding.difficultyNormal.setOnClickListener {
-            viewModel.difficulty.tryEmit(Difficulty.NORMAL)
+            viewModel.setDifficulty(Difficulty.NORMAL)
         }
-
         binding.difficultyHard.setOnClickListener {
-            viewModel.difficulty.tryEmit(Difficulty.HARD)
+            viewModel.setDifficulty(Difficulty.HARD)
         }
+    }
 
+    private fun setupCollectors() {
         launchMain {
             viewModel.difficulty.collect { difficulty ->
                 binding.difficulty.text = getString(R.string.difficulty, difficulty.toString())
             }
         }
-
     }
 
 }

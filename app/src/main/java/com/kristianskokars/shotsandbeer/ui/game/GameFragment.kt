@@ -14,6 +14,7 @@ import com.kristianskokars.shotsandbeer.R
 import com.kristianskokars.shotsandbeer.common.launchMain
 import com.kristianskokars.shotsandbeer.common.openFragment
 import com.kristianskokars.shotsandbeer.databinding.FragmentGameBinding
+import com.kristianskokars.shotsandbeer.repository.models.Difficulty
 import com.kristianskokars.shotsandbeer.ui.GameViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -24,10 +25,12 @@ class GameFragment : Fragment() {
 
     private val viewModel by activityViewModels<GameViewModel>()
     private val adapter by lazy {
-        GameAdapter(viewModel.difficulty.replayCache[0]) { gamePiece ->
+        GameAdapter(viewModel.difficulty.value) { gamePiece ->
             binding.input.text.append(gamePiece.valueString)
         }
     }
+
+    private var answerLength: Int = Difficulty.EASY.answerLength
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGameBinding.inflate(inflater)
@@ -37,19 +40,26 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val answerLength = viewModel.difficulty.replayCache[0].answerLength
-        binding.gameGrid.adapter = adapter
-        binding.gameGrid.layoutManager = GridLayoutManager(requireContext(), answerLength)
-
-        // Adjusts the number cap in the input field
+        // Adjusts the number cap
+        answerLength = viewModel.difficulty.value.answerLength
         binding.input.filters += InputFilter.LengthFilter(answerLength)
 
-        viewModel.startGame()
+        setupGameGrid()
+        setupListeners()
+        setupCollectors()
 
+        viewModel.startGame()
+    }
+
+    private fun setupGameGrid() {
+        binding.gameGrid.adapter = adapter
+        binding.gameGrid.layoutManager = GridLayoutManager(requireContext(), answerLength)
+    }
+
+    private fun setupListeners() {
         binding.submit.setOnClickListener {
             val text = binding.input.text.toString()
             binding.input.text.clear()
-
             viewModel.calculateResults(text)
         }
 
@@ -60,7 +70,9 @@ class GameFragment : Fragment() {
         binding.input.doAfterTextChanged {
             binding.submit.isEnabled = binding.input.text.length == answerLength
         }
+    }
 
+    private fun setupCollectors() {
         launchMain {
             viewModel.gamePieces.collect { pieces ->
                 adapter.gamePieces = pieces

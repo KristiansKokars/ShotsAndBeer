@@ -37,6 +37,7 @@ class GameAdapter(
         //  this is going to be a refactoring for later
         // nothing for easy as that is default values already in XML view
 
+        // Sets the size and width of the game pieces depending on the chosen difficulty
         val densityFactor = ceil(holder.binding.gamePiece.context.resources.displayMetrics.density).toInt()
         val fontScaleFactor = holder.binding.gamePiece.context.resources.configuration.fontScale
         when (difficulty) {

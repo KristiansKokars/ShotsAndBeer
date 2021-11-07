@@ -30,10 +30,17 @@ class HighScoresFragment : Fragment() {
 
         binding.highScoreList.adapter = adapter
 
+        setupListeners()
+        setupCollectors()
+    }
+
+    private fun setupListeners() {
         binding.closeHighScores.setOnClickListener {
             openFragment(R.id.navigation_menu)
         }
+    }
 
+    private fun setupCollectors() {
         launchMain {
             viewModel.highScores.collect { highScores ->
                 binding.emptyHighScore.visibility = if (highScores.isEmpty()) {

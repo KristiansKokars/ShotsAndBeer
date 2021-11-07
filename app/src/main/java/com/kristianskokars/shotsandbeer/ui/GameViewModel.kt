@@ -7,17 +7,14 @@ import com.kristianskokars.shotsandbeer.common.*
 import com.kristianskokars.shotsandbeer.repository.GameRepository
 import com.kristianskokars.shotsandbeer.repository.models.Difficulty
 import com.kristianskokars.shotsandbeer.repository.models.GamePiece
-import com.kristianskokars.shotsandbeer.repository.models.HighScoreModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.collect
+import com.kristianskokars.shotsandbeer.repository.models.HighScore
+import kotlinx.coroutines.flow.*
 import java.util.*
 import javax.inject.Inject
 
 class GameViewModel : ViewModel() {
 
-    @Inject
-    lateinit var repository: GameRepository
+    @Inject lateinit var repository: GameRepository
 
     private var timer = object : CountDownTimer(MAX_GAME_TIME, 10) {
         override fun onTick(ellapsedTime: Long) {
@@ -30,70 +27,70 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    private val _highScores = MutableSharedFlow<List<HighScoreModel>>(replay = 1)
-    private val _gamePieces = MutableSharedFlow<List<GamePiece>>(replay = 1)
-    private val _gameTimer = MutableSharedFlow<String>(replay = 1)
-    private val _attemptCount = MutableSharedFlow<Int>(replay = 1)
+    private var answer: List<Int> = emptyList()
+
+    private val _highScores = MutableStateFlow<List<HighScore>>(emptyList())
+    private val _gamePieces = MutableStateFlow<List<GamePiece>>(emptyList())
+    private val _gameTimer = MutableStateFlow("00:00:00")
+    private val _attemptCount = MutableStateFlow(0)
+    private val _difficulty = MutableStateFlow(Difficulty.EASY)
     private val _onGameOver = MutableSharedFlow<String?>(replay = 1)
 
-    private var answer: List<Int> = emptyList()
-    var difficulty = MutableSharedFlow<Difficulty>(replay = 1)
-
-    val highScores: SharedFlow<List<HighScoreModel>> = _highScores
-    val gamePieces: SharedFlow<List<GamePiece>> = _gamePieces
-    val gameTimer: SharedFlow<String> = _gameTimer
-    val attemptCount: SharedFlow<Int> = _attemptCount
-    val onGameOver: SharedFlow<String?> = _onGameOver
-
-
+    val highScores = _highScores.asStateFlow()
+    val gamePieces = _gamePieces.asStateFlow()
+    val gameTimer = _gameTimer.asStateFlow()
+    val attemptCount = _attemptCount.asStateFlow()
+    val difficulty = _difficulty.asStateFlow()
+    val onGameOver = _onGameOver.asSharedFlow()
 
     init {
         App.component.inject(this)
         launchIO {
             repository.highScores.collect { scores ->
-                _highScores.tryEmit(scores)
+                _highScores.value = scores
             }
         }
-        launchMain {
-            difficulty.emit(Difficulty.EASY)
-        }
+    }
+
+    fun setDifficulty(difficulty: Difficulty) {
+        _difficulty.value = difficulty
     }
 
     fun startGame() {
         answer = generateAnswerList()
 
         _onGameOver.tryEmit(null)
-        _attemptCount.tryEmit(0)
-        _gamePieces.tryEmit(emptyList())
+        _attemptCount.value = 0
+        _gamePieces.value = emptyList()
         timer.start()
+    }
+
+    fun calculateResults(input: String) {
+        _attemptCount.value = _attemptCount.value++
+        val inputNumbers = input.convertInputToIntList()
+        val attemptsList = _gamePieces.value.toMutableList()
+        val currentAttempt = generatePieces(inputNumbers)
+
+        // Checks if all pieces have been found
+        if (currentAttempt.filter { it.isFound }.size == difficulty.value.answerLength) {
+            onGameOver(true)
+        }
+
+        attemptsList.addAll(currentAttempt)
+        _gamePieces.value = attemptsList
     }
 
     private fun generateAnswerList(): List<Int> {
         // Credit to Edijs Gorbunovs for vastly reducing the logic needed here (and all the other improvements!)
         val values = (0..9).shuffled().toMutableList()
-        answer = (0 until difficulty.replayCache[0].answerLength).map { values.removeFirst() }
+        answer = (0 until difficulty.value.answerLength).map { values.removeFirst() }
 
         return answer
     }
 
-    fun calculateResults(input: String) {
-        _attemptCount.tryEmit(_attemptCount.replayCache[0] + 1)
-        val inputNumbers = input.convertInputToIntList()
-        val attemptsList = _gamePieces.replayCache[0].toMutableList()
-        val currentAttempt = generatePieces(inputNumbers)
-
-        // Checks if all pieces have been found
-        if (currentAttempt.filter { it.isFound }.size == difficulty.replayCache[0].answerLength) {
-            onGameOver(true)
-        }
-
-        attemptsList.addAll(currentAttempt)
-        _gamePieces.tryEmit(attemptsList)
-    }
-
     private fun generatePieces(inputNumbers: List<Int>): List<GamePiece> {
         val pieces = mutableListOf<GamePiece>()
-        var id = _gamePieces.replayCache[0].size
+        var id = _gamePieces.value.size
 
         inputNumbers.forEachIndexed { index, digit ->
             if (digit in answer) {
@@ -112,14 +109,14 @@ class GameViewModel : ViewModel() {
 
     private fun onGameOver(isGameWon: Boolean) {
         timer.cancel()
-        val score = _gameTimer.replayCache[0]
-        val attempts = _attemptCount.replayCache[0]
-        _onGameOver.tryEmit(_gameTimer.replayCache[0])
+        val score = _gameTimer.value
+        val attempts = _attemptCount.value
+        _onGameOver.tryEmit(_gameTimer.value)
 
         if (isGameWon) {
             launchIO {
                 val id = _highScores.replayCache.lastOrNull()?.maxOfOrNull { it.id }?.plus(1) ?: 0
-                repository.insertHighScore(HighScoreModel(id, Date().time.toDateString(), score, attempts.toString()))
+                repository.insertHighScore(HighScore(id, Date().time.toDateString(), score, attempts.toString()))
             }
         }
     }

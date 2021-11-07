@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kristianskokars.shotsandbeer.databinding.ItemHighScoreBinding
-import com.kristianskokars.shotsandbeer.repository.models.HighScoreModel
+import com.kristianskokars.shotsandbeer.repository.models.HighScore
 import kotlin.properties.Delegates
 
 class HighScoreAdapter : RecyclerView.Adapter<HighScoreAdapter.ViewHolder>() {
 
-    var highScores: List<HighScoreModel> by Delegates.observable(emptyList(), { _, old, new ->
+    var highScores: List<HighScore> by Delegates.observable(emptyList(), { _, old, new ->
         DiffUtil.calculateDiff(DifferenceUtil(old, new)).dispatchUpdatesTo(this)
     })
 
@@ -31,7 +31,7 @@ class HighScoreAdapter : RecyclerView.Adapter<HighScoreAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemHighScoreBinding) : RecyclerView.ViewHolder(binding.root)
 
-    inner class DifferenceUtil(private val old: List<HighScoreModel>, private val new: List<HighScoreModel>) : DiffUtil.Callback() {
+    inner class DifferenceUtil(private val old: List<HighScore>, private val new: List<HighScore>) : DiffUtil.Callback() {
         override fun getOldListSize() = old.size
 
         override fun getNewListSize() = new.size
