@@ -5,14 +5,23 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#FF0D0E0D</color>
+    <color name="gray">#9F9F9F</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="piece_found">#AED581</color>
-    <color name="piece_guessed">#D8C14D</color>
-    <color name="piece_idle">#919191</color>
+    <color name="piece_found">#FF72F943</color>
+    <color name="piece_guessed">#FFE7E03B</color>
+    <color name="piece_idle">#FFD9D9D9</color>
 
     <color name="difficulty_easy">#4CAF50</color>
     <color name="difficulty_normal">#FFC107</color>
     <color name="difficulty_hard">#F44336</color>
+
+    <color name="card_background">#1A6D6D6D</color>
+
+    <color name="light_green">#B9FFB7</color>
+    <color name="green">#FF46FF42</color>
+    <color name="light_red">#FF6262</color>
+    <color name="red">#FFFF0101</color>
+    <color name="yellow">#FFC107</color>
 </resources>

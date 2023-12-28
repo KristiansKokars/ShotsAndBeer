@@ -22,20 +22,19 @@
         android:id="@+id/empty_high_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/karla"
         android:gravity="center"
         android:text="@string/no_high_scores"
-        android:textColor="@color/black"
+        android:textColor="@color/yellow"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/close_high_scores"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <TextView
         android:id="@+id/close_high_scores"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        style="@style/TextButton"
         android:layout_margin="16dp"
         android:text="@string/go_back"
         app:layout_constraintBottom_toBottomOf="parent"

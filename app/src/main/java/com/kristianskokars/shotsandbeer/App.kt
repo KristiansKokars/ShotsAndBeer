@@ -1,7 +1,6 @@
 package com.kristianskokars.shotsandbeer
 
 import android.app.Application
-import androidx.databinding.ktx.BuildConfig
 import com.kristianskokars.shotsandbeer.common.LineNumberDebugTree
 import com.kristianskokars.shotsandbeer.injection.DaggerInjectionComponent
 import com.kristianskokars.shotsandbeer.injection.InjectionComponent

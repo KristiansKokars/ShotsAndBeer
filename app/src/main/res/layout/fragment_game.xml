@@ -25,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +36,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +43,8 @@
         tools:text="00:01:001" />
 
     <EditText
+        android:textColor="@color/green"
+        android:backgroundTint="@color/green"
         android:id="@+id/input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -56,25 +56,28 @@
         app:layout_constraintEnd_toStartOf="@+id/submit"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="24dp"
         tools:ignore="LabelFor"
         tools:text="1459" />
 
-    <Button
+    <TextView
         android:id="@+id/submit"
+        style="@style/TextButton"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:enabled="false"
         android:text="@string/submit"
         app:layout_constraintBottom_toTopOf="@+id/end_game"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <TextView
         android:id="@+id/end_game"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_margin="16dp"
-        android:text="@string/go_back"
+        style="@style/TextButton"
+        android:textColor="@color/color_red_text_button"
+        android:text="@string/quit"
+        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
