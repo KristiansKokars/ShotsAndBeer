@@ -66,7 +66,7 @@ class GameViewModel : ViewModel() {
     }
 
     fun calculateResults(input: String) {
-        _attemptCount.value = _attemptCount.value++
+        _attemptCount.update { it + 1 }
         val inputNumbers = input.convertInputToIntList()
         val attemptsList = _gamePieces.value.toMutableList()
         val currentAttempt = generatePieces(inputNumbers)
