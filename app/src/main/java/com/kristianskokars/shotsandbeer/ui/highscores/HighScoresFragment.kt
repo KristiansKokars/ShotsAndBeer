@@ -14,7 +14,6 @@ import com.kristianskokars.shotsandbeer.ui.GameViewModel
 import kotlinx.coroutines.flow.collect
 
 class HighScoresFragment : Fragment() {
-
     private lateinit var binding: FragmentHighscoresBinding
 
     private val viewModel by activityViewModels<GameViewModel>()
@@ -39,6 +38,8 @@ class HighScoresFragment : Fragment() {
             openFragment(R.id.navigation_menu)
         }
     }
+
+    // bouncingBar { 80 { {[    ]} {[=   ]} {[==  ]} {[=== ]} {[ ===]} {[  ==]} {[   =]} {[    ]} {[   =]} {[  ==]} {[ ===]} {[====]} {[=== ]} {[==  ]} {[=   ]} }}
 
     private fun setupCollectors() {
         launchMain {
