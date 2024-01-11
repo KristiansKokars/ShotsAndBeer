@@ -6,7 +6,6 @@
     <string name="submit">[Submit]</string>
     <string name="game_over_template">Game Over in %1$s!</string>
     <string name="attempts_made">Attempts Made: %1$s</string>
-    <string name="difficulty">Difficulty: %1$s</string>
 
     <string name="no_high_scores">No High Scores Found. Go play the game!</string>
     <string name="loading_indicator">[======]</string>
@@ -21,4 +20,5 @@
     <string name="time">Time</string>
     <string name="attempts">Attempts</string>
     <string name="enter_guess">Enter Guess</string>
+    <string name="choose_your_difficulty_affects_piece_count">Choose Your Difficulty (affects answer length)</string>
 </resources>
