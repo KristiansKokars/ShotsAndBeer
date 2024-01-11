@@ -12,15 +12,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import timber.log.Timber
 
-private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-
-fun launchIO(block: suspend CoroutineScope.() -> Unit) = ioScope.launch(
-    context = CoroutineExceptionHandler { _, e ->
-        Timber.d(e, "Coroutine failed: ${e.localizedMessage}")
-    },
-    block = block
-)
-
 fun Fragment.launchUI(
     state: Lifecycle.State = Lifecycle.State.STARTED,
     block: suspend CoroutineScope.() -> Unit
