@@ -18,7 +18,7 @@
         android:layout_margin="4dp"
         app:cardBackgroundColor="@{item.isFound ? @color/piece_found : item.isGuessed ? @color/piece_guessed : @color/piece_idle}"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
+        app:cardElevation="0dp"
         tools:cardBackgroundColor="@color/piece_idle">
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_height="82dp"
             android:gravity="center"
             android:text="@{item.valueString}"
-            android:textColor="@color/black"
+            android:textColor="@{item.isFound ? @color/piece_found_text : item.isGuessed ? @color/piece_guessed_text : @color/piece_idle_text}"
             android:textSize="44sp"
             tools:text="1" />
 

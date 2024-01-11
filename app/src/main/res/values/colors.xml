@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF0D0E0D</color>
     <color name="gray">#9F9F9F</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="piece_found">#FF72F943</color>
-    <color name="piece_guessed">#FFE7E03B</color>
-    <color name="piece_idle">#FFD9D9D9</color>
+    <color name="piece_found">#3372F943</color>
+    <color name="piece_found_text">#FF72F943</color>
+    <color name="piece_guessed">#33E7E03B</color>
+    <color name="piece_guessed_text">#FFE7E03B</color>
+    <color name="piece_idle">#336D6D6D</color>
+    <color name="piece_idle_text">#FF6D6D6D</color>
 
     <color name="difficulty_easy">#4CAF50</color>
     <color name="difficulty_normal">#FFC107</color>

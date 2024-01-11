@@ -83,20 +83,20 @@ class GameFragment : Fragment() {
 
         launchMain {
             viewModel.gameTimer.collect { time ->
-                binding.gameTimer.text = time
+                binding.gameTimer.text = resources.getString(R.string.score_time, time)
             }
         }
 
         launchMain {
             viewModel.attemptCount.collect { count ->
-                binding.attemptsMade.text = getString(R.string.attempts_made, count.toString())
+                binding.attemptCount.text = resources.getString(R.string.score_attempts, count)
             }
         }
 
         launchMain {
             viewModel.onGameOver.collect { time ->
                 if (time == null) return@collect
-                AlertDialog.Builder(requireContext())
+                AlertDialog.Builder(requireContext(), R.style.AlertDialog)
                     .setMessage(getString(R.string.game_over_template, time))
                     .setPositiveButton("OK") { popup, _ ->
                         popup.dismiss()
