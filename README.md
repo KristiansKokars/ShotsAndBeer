@@ -6,4 +6,4 @@ The user can go and start a game, where he has to guess 4-5-6 numbers, based on 
 After winning the game, his score is saved (attempts made and time), which he can go on to view in the High Scores menu. Lost/unfinished games are not counted.
 
 ## Screenshots
-<img src="screenshots/Start.jpg" alt="Start Menu" width="30%"/> <img src="screenshots/Game.jpg" alt="Game View" width="30%"/> <img src="screenshots/HighScores.jpg" alt="High Score Menu" width="30%"/>
+<img src="screenshots/Start.png" alt="Start Menu" width="20%"/> <img src="screenshots/Game.png" alt="Game View" width="20%"/> <img src="screenshots/HighScores.png" alt="High Score Menu" width="20%"/> <img src="screenshots/HowToPlay.png" alt="How To Play" width="20%"/>
