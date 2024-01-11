@@ -21,11 +21,25 @@
         <item name="android:windowBackground">@color/black</item>
     </style>
 
+    <style name="TextH1" parent="Theme.ShotsAndBeer">
+        <item name="android:textSize">36sp</item>
+        <item name="fontFamily">@font/karla</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <style name="TextBody" parent="Theme.ShotsAndBeer">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/green</item>
+    </style>
+
     <style name="TextButton" parent="Theme.ShotsAndBeer">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:text">@string/new_game</item>
         <item name="android:textSize">24sp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>

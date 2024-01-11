@@ -11,3 +11,5 @@ fun Fragment.navigate(id: Int) = activity?.findNavController(R.id.navigation_hos
         navigate(id)
     }
 }
+
+fun Fragment.navigateUp() = activity?.findNavController(R.id.navigation_host_fragment)?.navigateUp()

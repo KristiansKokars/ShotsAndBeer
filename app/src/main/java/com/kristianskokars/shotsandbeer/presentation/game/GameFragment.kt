@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.kristianskokars.shotsandbeer.R
 import com.kristianskokars.shotsandbeer.common.launchUI
 import com.kristianskokars.shotsandbeer.common.navigate
+import com.kristianskokars.shotsandbeer.common.navigateUp
 import com.kristianskokars.shotsandbeer.common.toTimeString
 import com.kristianskokars.shotsandbeer.common.viewBinding
 import com.kristianskokars.shotsandbeer.databinding.FragmentGameBinding
@@ -60,7 +61,7 @@ class GameFragment : Fragment(R.layout.fragment_game) {
         }
 
         binding.endGame.setOnClickListener {
-            navigate(R.id.navigation_menu)
+            navigateUp()
         }
 
         binding.input.doAfterTextChanged {

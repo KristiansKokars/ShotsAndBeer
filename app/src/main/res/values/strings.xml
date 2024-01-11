@@ -2,6 +2,7 @@
     <string name="app_name">Shots and Beer</string>
     <string name="new_game">[New Game]</string>
     <string name="high_scores">[High Scores]</string>
+    <string name="how_to_play">[How To Play]</string>
 
     <string name="submit">[Submit]</string>
     <string name="game_over_template">Game Over in %1$s!</string>
@@ -21,4 +22,6 @@
     <string name="attempts">Attempts</string>
     <string name="enter_guess">Enter Guess</string>
     <string name="choose_your_difficulty_affects_piece_count">Choose Your Difficulty (affects answer length)</string>
+    <string name="how_to_play_title">How To Play</string>
+    <string name="how_to_play_description">The main objective of the game is to guess the correct number as quickly and in the least amount of attempts as possible.\n\nWhen a piece is guessed, but not in the correct position, it will be shown as yellow. If the piece is guessed correctly, it will be green. Otherwise it will be gray.\n\nThe difficulty affects how many numbers you need to guess: 4–5–6 going from Easy to Hard.\n\nImportant! Note that every digit in the number is unique and does not repeat.</string>
 </resources>

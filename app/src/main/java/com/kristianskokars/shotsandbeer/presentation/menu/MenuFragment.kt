@@ -34,6 +34,9 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         binding.showHighScores.setOnClickListener {
             navigate(R.id.navigation_high_scores)
         }
+        binding.showHowToPlay.setOnClickListener {
+            navigate(R.id.navigation_how_to_play)
+        }
         binding.difficultyEasy.setOnClickListener {
             viewModel.setDifficulty(Difficulty.EASY)
         }

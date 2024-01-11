@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,10 +19,10 @@
         android:id="@+id/difficulty_easy"
         style="@style/TextButton"
         android:layout_marginEnd="16dp"
+        android:padding="4dp"
         android:text="@string/difficulty_easy"
         android:textColor="@color/difficulty_easy"
         android:textSize="20sp"
-        android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/difficulty_normal"
         app:layout_constraintTop_toBottomOf="@+id/difficulty" />
@@ -31,10 +30,10 @@
     <TextView
         android:id="@+id/difficulty_normal"
         style="@style/TextButton"
+        android:padding="4dp"
         android:text="@string/difficulty_normal"
         android:textColor="@color/difficulty_normal"
         android:textSize="20sp"
-        android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficulty" />
@@ -43,8 +42,8 @@
         android:id="@+id/difficulty_hard"
         style="@style/TextButton"
         android:layout_marginStart="16dp"
-        android:text="@string/difficulty_hard"
         android:padding="4dp"
+        android:text="@string/difficulty_hard"
         android:textColor="@color/difficulty_hard"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/difficulty_normal"
@@ -53,6 +52,7 @@
     <TextView
         android:id="@+id/start_new_game"
         style="@style/TextButton"
+        android:text="@string/new_game"
         app:layout_constraintBottom_toTopOf="@id/show_high_scores"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,5 +67,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/start_new_game" />
+
+    <TextView
+        android:id="@+id/show_how_to_play"
+        style="@style/TextButton"
+        android:text="@string/how_to_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/show_high_scores" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
