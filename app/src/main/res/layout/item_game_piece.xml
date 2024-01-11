@@ -1,36 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game_piece"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardBackgroundColor="@color/piece_idle"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp"
+    tools:cardBackgroundColor="@color/piece_idle">
 
-    <data>
+    <TextView
+        android:id="@+id/game_piece_text_view"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
+        android:gravity="center"
+        android:textColor="@color/piece_idle_text"
+        android:textSize="44sp"
+        tools:text="1" />
 
-        <variable
-            name="item"
-            type="com.kristianskokars.shotsandbeer.repository.models.GamePiece" />
-
-    </data>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/game_piece"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardBackgroundColor="@{item.isFound ? @color/piece_found : item.isGuessed ? @color/piece_guessed : @color/piece_idle}"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0dp"
-        tools:cardBackgroundColor="@color/piece_idle">
-
-        <TextView
-            android:id="@+id/game_piece_text_view"
-            android:layout_width="82dp"
-            android:layout_height="82dp"
-            android:gravity="center"
-            android:text="@{item.valueString}"
-            android:textColor="@{item.isFound ? @color/piece_found_text : item.isGuessed ? @color/piece_guessed_text : @color/piece_idle_text}"
-            android:textSize="44sp"
-            tools:text="1" />
-
-    </androidx.cardview.widget.CardView>
-
-</layout>
+</androidx.cardview.widget.CardView>

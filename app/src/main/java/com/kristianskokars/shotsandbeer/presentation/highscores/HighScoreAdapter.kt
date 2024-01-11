@@ -1,4 +1,4 @@
-package com.kristianskokars.shotsandbeer.ui.highscores
+package com.kristianskokars.shotsandbeer.presentation.highscores
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kristianskokars.shotsandbeer.R
+import com.kristianskokars.shotsandbeer.common.toTimeString
 import com.kristianskokars.shotsandbeer.databinding.ItemHighScoreBinding
-import com.kristianskokars.shotsandbeer.repository.models.HighScore
+import com.kristianskokars.shotsandbeer.data.model.HighScore
 
 class HighScoreAdapter : ListAdapter<HighScore, HighScoreAdapter.ViewHolder>(HighScoreDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -23,8 +24,8 @@ class HighScoreAdapter : ListAdapter<HighScore, HighScoreAdapter.ViewHolder>(Hig
         val resources = holder.itemView.resources
 
         holder.binding.date.text = item.date
-        holder.binding.attemptCount.text = resources.getString(R.string.score_attempts, item.attempts.toInt())
-        holder.binding.time.text = resources.getString(R.string.score_time, item.time)
+        holder.binding.attemptCount.text = resources.getString(R.string.score_attempts, item.attempts)
+        holder.binding.time.text = resources.getString(R.string.score_time, item.timeInMillis.toTimeString())
     }
 
     inner class ViewHolder(val binding: ItemHighScoreBinding) : RecyclerView.ViewHolder(binding.root)

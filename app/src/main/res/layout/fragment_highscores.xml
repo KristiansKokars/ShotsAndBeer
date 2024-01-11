@@ -24,8 +24,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/karla"
+        android:visibility="gone"
         android:gravity="center"
         android:text="@string/no_high_scores"
+        android:textColor="@color/yellow"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/close_high_scores"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loading_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/loading_indicator"
         android:textColor="@color/yellow"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/close_high_scores"

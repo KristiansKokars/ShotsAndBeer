@@ -1,4 +1,4 @@
-package com.kristianskokars.shotsandbeer.repository.models
+package com.kristianskokars.shotsandbeer.data.model
 
 enum class Difficulty(val answerLength: Int) {
     EASY(4),

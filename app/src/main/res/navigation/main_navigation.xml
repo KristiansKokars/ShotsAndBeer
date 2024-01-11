@@ -6,14 +6,14 @@
 
     <fragment
         android:id="@+id/navigation_menu"
-        android:name="com.kristianskokars.shotsandbeer.ui.menu.MenuFragment" />
+        android:name="com.kristianskokars.shotsandbeer.presentation.menu.MenuFragment" />
 
     <fragment
         android:id="@+id/navigation_game"
-        android:name="com.kristianskokars.shotsandbeer.ui.game.GameFragment" />
+        android:name="com.kristianskokars.shotsandbeer.presentation.game.GameFragment" />
 
     <fragment
         android:id="@+id/navigation_high_scores"
-        android:name="com.kristianskokars.shotsandbeer.ui.highscores.HighScoresFragment" />
+        android:name="com.kristianskokars.shotsandbeer.presentation.highscores.HighScoresFragment" />
 
 </navigation>

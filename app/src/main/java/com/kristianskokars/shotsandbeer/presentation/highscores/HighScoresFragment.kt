@@ -1,28 +1,23 @@
-package com.kristianskokars.shotsandbeer.ui.highscores
+package com.kristianskokars.shotsandbeer.presentation.highscores
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.kristianskokars.shotsandbeer.R
-import com.kristianskokars.shotsandbeer.common.launchMain
-import com.kristianskokars.shotsandbeer.common.openFragment
+import com.kristianskokars.shotsandbeer.common.launchUI
+import com.kristianskokars.shotsandbeer.common.navigate
+import com.kristianskokars.shotsandbeer.common.viewBinding
 import com.kristianskokars.shotsandbeer.databinding.FragmentHighscoresBinding
-import com.kristianskokars.shotsandbeer.ui.GameViewModel
-import kotlinx.coroutines.flow.collect
+import com.kristianskokars.shotsandbeer.presentation.GameViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
-class HighScoresFragment : Fragment() {
-    private lateinit var binding: FragmentHighscoresBinding
-
+@AndroidEntryPoint
+class HighScoresFragment : Fragment(R.layout.fragment_highscores) {
+    private val binding by viewBinding(FragmentHighscoresBinding::bind)
     private val viewModel by activityViewModels<GameViewModel>()
     private val adapter by lazy { HighScoreAdapter() }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentHighscoresBinding.inflate(inflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,13 +29,19 @@ class HighScoresFragment : Fragment() {
 
     private fun setupListeners() {
         binding.closeHighScores.setOnClickListener {
-            openFragment(R.id.navigation_menu)
+            navigate(R.id.navigation_menu)
         }
     }
 
     private fun setupCollectors() {
-        launchMain {
-            viewModel.highScores.collect { highScores ->
+        launchUI {
+            viewModel.highScores.collectLatest { highScores ->
+                if (highScores == null) {
+                    binding.loadingIndicator.visibility = View.VISIBLE
+                    return@collectLatest
+                }
+
+                binding.loadingIndicator.visibility = View.GONE
                 binding.emptyHighScore.visibility = if (highScores.isEmpty()) {
                     View.VISIBLE
                 } else {

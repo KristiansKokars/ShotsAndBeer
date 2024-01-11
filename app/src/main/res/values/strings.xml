@@ -9,6 +9,7 @@
     <string name="difficulty">Difficulty: %1$s</string>
 
     <string name="no_high_scores">No High Scores Found. Go play the game!</string>
+    <string name="loading_indicator">[======]</string>
     <string name="go_back">[Go Back]</string>
     <string name="quit">[Quit]</string>
     <string name="score_attempts">/%1$02d/</string>

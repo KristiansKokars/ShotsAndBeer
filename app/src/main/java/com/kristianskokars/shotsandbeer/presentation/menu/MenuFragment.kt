@@ -1,29 +1,22 @@
-package com.kristianskokars.shotsandbeer.ui.menu
+package com.kristianskokars.shotsandbeer.presentation.menu
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.kristianskokars.shotsandbeer.R
-import com.kristianskokars.shotsandbeer.common.launchMain
-import com.kristianskokars.shotsandbeer.common.openFragment
+import com.kristianskokars.shotsandbeer.common.launchUI
+import com.kristianskokars.shotsandbeer.common.navigate
+import com.kristianskokars.shotsandbeer.common.viewBinding
 import com.kristianskokars.shotsandbeer.databinding.FragmentMenuBinding
-import com.kristianskokars.shotsandbeer.repository.models.Difficulty
-import com.kristianskokars.shotsandbeer.ui.GameViewModel
-import kotlinx.coroutines.flow.collect
+import com.kristianskokars.shotsandbeer.data.model.Difficulty
+import com.kristianskokars.shotsandbeer.presentation.GameViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class MenuFragment : Fragment() {
-
-    private lateinit var binding: FragmentMenuBinding
-
+@AndroidEntryPoint
+class MenuFragment : Fragment(R.layout.fragment_menu) {
+    private val binding by viewBinding(FragmentMenuBinding::bind)
     private val viewModel by activityViewModels<GameViewModel>()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentMenuBinding.inflate(inflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,10 +27,10 @@ class MenuFragment : Fragment() {
 
     private fun setupListeners() {
         binding.startNewGame.setOnClickListener {
-            openFragment(R.id.navigation_game)
+            navigate(R.id.navigation_game)
         }
         binding.showHighScores.setOnClickListener {
-            openFragment(R.id.navigation_high_scores)
+            navigate(R.id.navigation_high_scores)
         }
         binding.difficultyEasy.setOnClickListener {
             viewModel.setDifficulty(Difficulty.EASY)
@@ -51,11 +44,10 @@ class MenuFragment : Fragment() {
     }
 
     private fun setupCollectors() {
-        launchMain {
+        launchUI {
             viewModel.difficulty.collect { difficulty ->
                 binding.difficulty.text = getString(R.string.difficulty, difficulty.toString())
             }
         }
     }
-
 }
