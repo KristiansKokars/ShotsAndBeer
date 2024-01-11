@@ -28,7 +28,6 @@ class HighScoresFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.highScoreList.adapter = adapter
-
         setupListeners()
         setupCollectors()
     }
@@ -39,8 +38,6 @@ class HighScoresFragment : Fragment() {
         }
     }
 
-    // bouncingBar { 80 { {[    ]} {[=   ]} {[==  ]} {[=== ]} {[ ===]} {[  ==]} {[   =]} {[    ]} {[   =]} {[  ==]} {[ ===]} {[====]} {[=== ]} {[==  ]} {[=   ]} }}
-
     private fun setupCollectors() {
         launchMain {
             viewModel.highScores.collect { highScores ->
@@ -49,7 +46,7 @@ class HighScoresFragment : Fragment() {
                 } else {
                     View.GONE
                 }
-                adapter.highScores = highScores
+                adapter.submitList(highScores)
             }
         }
     }
