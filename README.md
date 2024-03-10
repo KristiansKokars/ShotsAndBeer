@@ -1,3 +1,6 @@
+<img src="screenshots/ShotsAndBeer.jpg" alt="Shots And Beer Feature Picture" />
+
+
 # Shots and Beer
 A simple mobile game made originally for the TDL School Course in 2021, learning about Android development and industry best practices.
 
@@ -8,7 +11,9 @@ After winning the game, his score is saved (attempts made and time), which he ca
 This was my first ever app in Android, starting my mobile development passion!
 
 ## Screenshots
-<img src="screenshots/Start.png" alt="Start Menu" width="20%"/> <img src="screenshots/Game.png" alt="Game View" width="20%"/> <img src="screenshots/HighScores.png" alt="High Score Menu" width="20%"/> <img src="screenshots/HowToPlay.png" alt="How To Play" width="20%"/>
+|                             |                            |                                  |                                 |
+|:---------------------------:|:--------------------------:|:--------------------------------:|:-------------------------------:|
+| ![1](screenshots/Start.png) | ![2](screenshots/Game.png) | ![3](screenshots/HighScores.png) | ![4](screenshots/HowToPlay.png) |
 
 ## Technologies
 - MVVM
